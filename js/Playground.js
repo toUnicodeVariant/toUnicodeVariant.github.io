@@ -9,6 +9,11 @@ const Playground = (function(toUnicodeVariant) {
 	const qall = (sel) => { return document.querySelectorAll(sel) }	// eslint-disable-line no-unused-vars
 	const gebi = (id) => { return document.getElementById(id) }	// eslint-disable-line no-unused-vars
 
+	const playground_variants = gebi('playground-variants')
+	const playground_diacritics = gebi('playground-diacritics')
+	const playground_spaces = gebi('playground-spaces')
+	const input = gebi('playground-input')
+	const output = gebi('playground-output')
 	const special_chars = gebi('table-special-chars')
 	const combinings = gebi('table-combinings')
 	const spaces = gebi('table-spaces')
@@ -17,11 +22,9 @@ const Playground = (function(toUnicodeVariant) {
 		if (special_chars) initSpecialChars()
 		if (combinings) initCombinings()
 		if (spaces) initSpaces()
-	}
-
-	const getVariantSection = function() {
-		for (const variant in Test.variants) {
-			console.log(variant)
+		if (playground_variants) {
+			initPlaygroundVariants()
+			initPlaygroundCombinings()
 		}
 	}
 
@@ -58,17 +61,15 @@ const Playground = (function(toUnicodeVariant) {
 		combinings.insertAdjacentHTML('beforeend', head)
 		let rows = ''
 		for (const diacritic in Test.combinings) {
-			//if (diacritic.indexOf('space') === -1 && (diacritic.indexOf('-above') === -1 || diacritic === 'cross-above')) {
-				let test 
-				if (diacritic.indexOf('encl') === 0) {
-					test = toUnicodeVariant('abc', 'italic', `${diacritic}, space-en`) 
-				} else if (diacritic.indexOf('halo') === 0) {
-					test = toUnicodeVariant('abc', 'sans', `${diacritic}, space-en`) 
-				} else {
-					test = toUnicodeVariant('abcdef', 'italic', diacritic)
-				}
-				rows += '<tr><td><code>' + diacritic + '</td><td><code>' + Test.combinings[diacritic].short + '</code></code></td><td>' + test + '</td></tr>'
-			//}
+			let test 
+			if (diacritic.indexOf('encl') === 0) {
+				test = toUnicodeVariant('abc', 'italic', `${diacritic}, space-en`) 
+			} else if (diacritic.indexOf('halo') === 0) {
+				test = toUnicodeVariant('abc', 'sans', `${diacritic}, space-en`) 
+			} else {
+				test = toUnicodeVariant('abcdef', 'italic', diacritic)
+			}
+			rows += '<tr><td><code>' + diacritic + '</td><td><code>' + Test.combinings[diacritic].short + '</code></code></td><td>' + test + '</td></tr>'
 		}
 		let tbody = '<tbody>' + rows + '</tbody>'
 		combinings.insertAdjacentHTML('beforeend', tbody)
@@ -106,6 +107,56 @@ const Playground = (function(toUnicodeVariant) {
 		}
 		tbody += '</tbody></table>'
 		spaces.insertAdjacentHTML('beforeend', tbody)
+	}
+
+/*
+	const initPlaygroundVariants = function() {
+		let form = '<form class="d-flex">'
+		for (const variant in Test.variants) {
+			form += `<div class="form-check">
+			  <input class="form-check-input" type="radio" name="playground-variant" id="variant-${Test.variants[variant].short}">
+			  <label class="form-check-label" for="variant-${Test.variants[variant].short}">
+					${toUnicodeVariant(variant, variant)}
+			  </label>
+			</div>`
+		}
+*/
+
+	const convertUnicode = function() {
+		const variant = playground_variants.querySelector('[name="playground-variant"]:checked').getAttribute('data-variant')
+		output.value = toUnicodeVariant(input.value, variant)
+	}
+
+	const initPlaygroundVariants = function() {
+		const variantName = function(variant) {
+			if (variant === 'circled negative') return 'negative'
+			if (variant === 'squared negative') return 'negative'
+			if (variant === 'flags') return 'f l a g s'
+			return variant
+		}
+		let form = '<div class="container">'
+		form += '<div class="row">'
+		for (const variant in Test.variants) {
+			form += '<div class="col-md-2 col-sm-6 col-xs-6">'
+			form += `<div class="form-check">
+			  <input class="form-check-input" type="radio" name="playground-variant" data-variant="${Test.variants[variant]}" id="variant-${Test.variants[variant]}">
+			  <label class="form-check-label" for="variant-${Test.variants[variant]}">
+					${toUnicodeVariant(variantName(variant), variant)}
+			  </label>
+			</div>`
+			form += '</div>'
+		}
+		form += '</div>'
+		form += '</div>'
+		playground_variants.innerHTML = form
+		playground_variants.querySelectorAll('[name="playground-variant"]').forEach(function(radio) {
+			console.log(radio)
+			radio.onclick = convertUnicode
+		})
+	}
+
+	const initPlaygroundCombinings = function() {
+
 	}
 
 	return {
