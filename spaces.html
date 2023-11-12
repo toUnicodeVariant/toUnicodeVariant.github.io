@@ -8,7 +8,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
 <link rel="manifest" href="site.webmanifest">
-<title>toUnicodeVariant Playground</title>
+<title>toUnicodeVariant, spaces</title>
 <meta name="description" content="Put your description here.">
 <link href="fallback/bootstrap.min.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
@@ -23,7 +23,7 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<li class="nav-item">
-						<a class="nav-link active" aria-current="Playground" href="playground.html">Playground</a>
+						<a class="nav-link" aria-current="Playground" href="playground.html">Playground</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" aria-current="Special chars" href="special-chars.html">Special chars</a>
@@ -32,7 +32,12 @@
 						<a class="nav-link" aria-current="Combinings" href="combinings.html">Combinings</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" aria-current="Spaces" href="spaces.html">Spaces</a>
+						<a class="nav-link active" aria-current="Spaces" href="spaces.html">Spaces</a>
+					</li>
+					<li class="nav-item mx-4">
+						<a class="navbar-brand" href="https://github.com/davidkonrad/toUnicodeVariant">
+							<img height="32px" src ="github/github-mark-white.svg"/>
+						</a>
 					</li>
 				</ul>
 			</div>
@@ -40,15 +45,10 @@
 	</nav>
 
 	<div class="container my-5">
-		<h1>toUnicodeVariant Playground</h1>
+		<h1>toUnicodeVariant, spaces</h1>
       <div class="col-lg-8 px-0">
-        <p class="fs-5">You've successfully loaded up the Bootstrap starter example. It includes <a href="https://getbootstrap.com/">Bootstrap 5</a> via the <a href="https://www.jsdelivr.com/package/npm/bootstrap">jsDelivr CDN</a> and includes an additional CSS and JS file for your own code.</p>
-        <p>Feel free to download or copy-and-paste any parts of this example.</p>
-
-        <hr class="col-1 my-4">
-
-        <a href="https://getbootstrap.com" class="btn btn-primary">Read the Bootstrap docs</a>
-        <a href="https://github.com/twbs/examples" class="btn btn-secondary">View on GitHub</a>
+				<table class="table table-bordered text-center" id="table-spaces"></table>
+				<small><sup>1</sup><em>squared negative</em>: Many readers render 🅰,🅱,🅾,🆎 as blood type</small>
       </div>
     </div>
 	</div>
@@ -78,6 +78,7 @@
 
 <script src="fallback/bootstrap.bundle.min.js"></script>
 <script src="js/toUnicodeVariant.js"></script>
+<script src="js/Test.js"></script>
 <script src="js/Playground.js"></script>
 
 </body>
