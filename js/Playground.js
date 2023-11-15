@@ -5,8 +5,8 @@
 "use strict";
 
 const Playground = (function(toUnicodeVariant) {
-	const qsel = (sel) => { return document.querySelector(sel) }	// eslint-disable-line no-unused-vars
-	const qall = (sel) => { return document.querySelectorAll(sel) }	// eslint-disable-line no-unused-vars
+	//const qsel = (sel) => { return document.querySelector(sel) }	// eslint-disable-line no-unused-vars
+	//const qall = (sel) => { return document.querySelectorAll(sel) }	// eslint-disable-line no-unused-vars
 	const gebi = (id) => { return document.getElementById(id) }	// eslint-disable-line no-unused-vars
 
 	const playground_variants = gebi('playground-variants')
@@ -43,7 +43,7 @@ const Playground = (function(toUnicodeVariant) {
 			let row = '<tr>'
 			row += '<td class="table-primary">' + char + '</td>'
 			for (const variant in Test.variants) {
-				if (!not_supporting.includes(Test.variants[variant])) row += '<td title="Small letter ' + char +'">' + toUnicodeVariant(char, variant) + '</td>'
+				if (!not_supporting.includes(Test.variants[variant])) row += '<td title="Small letter ' + char +'">' + toUnicodeVariant(char + char.toUpperCase(), variant) + '</td>'
 			}
 			row += '</tr>'
 			tbody += row
@@ -110,23 +110,20 @@ const Playground = (function(toUnicodeVariant) {
 	}
 
 /*
-	const initPlaygroundVariants = function() {
-		let form = '<form class="d-flex">'
-		for (const variant in Test.variants) {
-			form += `<div class="form-check">
-			  <input class="form-check-input" type="radio" name="playground-variant" id="variant-${Test.variants[variant].short}">
-			  <label class="form-check-label" for="variant-${Test.variants[variant].short}">
-					${toUnicodeVariant(variant, variant)}
-			  </label>
-			</div>`
-		}
+	playgroundConvert
 */
-
-	const convertUnicode = function() {
+	const playgroundConvert = function() {
 		const variant = playground_variants.querySelector('[name="playground-variant"]:checked').getAttribute('data-variant')
-		output.value = toUnicodeVariant(input.value, variant)
+		const value = (function(value) {
+			if (['r'].includes(variant)) return parseInt(value)
+			return value			
+		})(input.value)  
+		output.value = toUnicodeVariant(value, variant)
 	}
 
+/*
+	initPlaygroundVariants
+*/
 	const initPlaygroundVariants = function() {
 		const variantName = function(variant) {
 			if (variant === 'circled negative') return 'negative'
@@ -140,7 +137,7 @@ const Playground = (function(toUnicodeVariant) {
 			form += '<div class="col-md-2 col-sm-6 col-xs-6">'
 			form += `<div class="form-check">
 			  <input class="form-check-input" type="radio" name="playground-variant" data-variant="${Test.variants[variant]}" id="variant-${Test.variants[variant]}">
-			  <label class="form-check-label" for="variant-${Test.variants[variant]}">
+			  <label class="form-check-label" for="variant-${Test.variants[variant]}" title="Set variant to ${variant}">
 					${toUnicodeVariant(variantName(variant), variant)}
 			  </label>
 			</div>`
@@ -150,8 +147,7 @@ const Playground = (function(toUnicodeVariant) {
 		form += '</div>'
 		playground_variants.innerHTML = form
 		playground_variants.querySelectorAll('[name="playground-variant"]').forEach(function(radio) {
-			console.log(radio)
-			radio.onclick = convertUnicode
+			radio.onclick = playgroundConvert
 		})
 	}
 

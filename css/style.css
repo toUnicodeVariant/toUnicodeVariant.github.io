@@ -1,3 +1,14 @@
+@font-face {
+	font-family: DoulosSIL;
+	src: url('../DoulosSIL/web/DoulosSIL-Regular.woff2') format('woff2'),
+	url('../DoulosSIL/web/DoulosSIL-Regular.woff2') format('woff');
+}
+
+body {
+	font-family: DoulosSIL
+}
+
+
 table td,
 table th {
 	font-size: 90%;
@@ -9,16 +20,8 @@ table th {
 	background-image: repeating-linear-gradient(-45deg, transparent 0 3px, #fff3cd 3px 6px);
 }
 
-.github {
-	background-image: url(../github/github-mark.svg);
-	background-repeat: no-repeat;
-	min-width: 2rem;
-	min-height: 2rem;
+label {
+	cursor: pointer;
 }
-.github-light {
-	background-image: url(../github/github-mark-white.svg);
-	background-repeat: no-repeat;
-	display: block;
-	width: 32px;
-	height: 32px;
-}
+
+

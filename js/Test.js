@@ -4,7 +4,7 @@
 
 "use strict";
 
-const Test = {
+const Test = { // eslint-disable-line no-unused-vars
 	variants: {
 		"monospace": "m",
 		"bold": "b",
@@ -77,7 +77,7 @@ const Test = {
 		'space-em': 'space-em',
 		'space-ogham': 'space-ogham'
 	},
-	"special_chars": "äâáåăǟãāȧȃḅčćċçḉĉèéēĕëěęȇȅêğǧģġḥĩîíìḱḳņńõöōôóòŕşșṩšśüùúûŭȕȗůūẁẃø"
+	"special_chars": "äâáåăǟãāȧȃḅčćċçḉĉèéēĕëěęȇȅêğǧģġḥĩîíìḱḳņńõöōôóòŕşșṩšśüùúûŭȕȗůūẁẃøæ"
 };
 
 
