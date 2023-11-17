@@ -317,7 +317,7 @@ function toUnicodeVariant(str, variant, combinings) {
 		*/
 
 		// #3 use small letter diacritics on some capital letters
-		if (['ḉ', 'ç', 'ę', 'ḥ', 'ḳ', 'ņ', 'ṩ', 'ş', 'ø'].includes(char)) {
+		if (['ḉ', 'ç', 'ę', 'ḥ', 'ḳ', 'ņ', 'ṩ', 'ş', 'š', 'ø'].includes(char)) {
 			if (char === 'ø') {
 				special_chars['Ø'] = { 'char': 'O', 'combine': string(diacritics.solidus.code) }
 			} else {
@@ -407,26 +407,12 @@ function toUnicodeVariant(str, variant, combinings) {
 		} else {
 			result += c 
 		}
-
 		if (combine_special) result += combine_special
 		if (combine_with) result += combine_with 
-
-		//if (combine_special) result = !['m', 'monospace'].includes(type) ? result + combine_special : combine_special + result
-		//if (combine_with) result = !['m', 'monospace'].includes(type) ? result + combine_with : combine_with + result
-
-/*
-*/
-
 	}
 
 	return result
 }
-
-toUnicodeVariant.prototype.getVariants = function() {
-	return variantOffsets
-}
-
-
 
 if (typeof module === 'object' && module && typeof module.exports === 'object') {
 	module.exports = toUnicodeVariant
