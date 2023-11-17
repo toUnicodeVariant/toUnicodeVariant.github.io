@@ -305,13 +305,29 @@ function toUnicodeVariant(str, variant, combinings) {
 		//'s̈': { 'char': 's', 'combine': string(diacritics.diaeresis.code) },
 	}
 
-	//reset special chars, capital letters
-	//in the future, some capital speciel chars can be mimicked as well
+	//reset special chars, capital letters, choose the desired method
 	for (const char of Object.keys(special_chars)) {
-		//special_chars[char.toUpperCase()] = { 'char': char, 'combine': false }
-		special_chars[char.toUpperCase()] = { 'char': special_chars[char].char.toUpperCase(), 'combine': special_chars[char].combine }
+		/* 
+			// #1 for all capital letters, simply ignore the small letter diacritic(s)
+			special_chars[char.toUpperCase()] = { 'char': char, 'combine': false }
+		*/
+		/*
+			// #2 for all capital letters, blindly use any of the small letter diacritic(s)
+			special_chars[char.toUpperCase()] = { 'char': special_chars[char].char.toUpperCase(), 'combine': special_chars[char].combine }
+		*/
+
+		// #3 use small letter diacritics on some capital letters
+		if (['ḉ', 'ç', 'ę', 'ḥ', 'ḳ', 'ņ', 'ṩ', 'ş', 'ø'].includes(char)) {
+			if (char === 'ø') {
+				special_chars['Ø'] = { 'char': 'O', 'combine': string(diacritics.solidus.code) }
+			} else {
+				special_chars[char.toUpperCase()] = { 'char': special_chars[char].char.toUpperCase(), 'combine': special_chars[char].combine }
+			}
+		} else {
+			special_chars[char.toUpperCase()] = { 'char': char, 'combine': false }
+		}
+
 	}
-	special_chars['Ø'] = { 'char': 'O', 'combine': string(diacritics.solidus.code) }
 
 	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 	const numbers = '0123456789'
@@ -332,8 +348,7 @@ function toUnicodeVariant(str, variant, combinings) {
 			diacritic = diacritic.trim().toLowerCase()
 			for (const d in diacritics) {
 				if (diacritic === d || diacritic === diacritics[d].short) {
-					//result += string(diacritics.wordjoiner.code) + string(diacritics[d].code)
-					string(diacritics.wjoiner.code ,diacritics[d].code) //
+					result += string(diacritics.nonejoiner.code, diacritics[d].code) 
 				}
 			}
 		})
@@ -406,6 +421,12 @@ function toUnicodeVariant(str, variant, combinings) {
 
 	return result
 }
+
+toUnicodeVariant.prototype.getVariants = function() {
+	return variantOffsets
+}
+
+
 
 if (typeof module === 'object' && module && typeof module.exports === 'object') {
 	module.exports = toUnicodeVariant

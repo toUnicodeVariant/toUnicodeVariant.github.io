@@ -15,11 +15,15 @@ const Playground = (function(toUnicodeVariant) {
 	const input = gebi('playground-input')
 	const output = gebi('playground-output')
 	const special_chars = gebi('table-special-chars')
+	const special_capital_chars = gebi('table-special-capital-chars')
 	const combinings = gebi('table-combinings')
 	const spaces = gebi('table-spaces')
 
 	const init = function() {
-		if (special_chars) initSpecialChars()
+		if (special_chars) {
+			initSpecialChars()
+			initSpecialCapitalChars()
+		}
 		if (combinings) initCombinings()
 		if (spaces) initSpaces()
 		if (playground_variants) {
@@ -28,12 +32,15 @@ const Playground = (function(toUnicodeVariant) {
 		}
 	}
 
+/*
+	initSpecialChars
+*/
 	const initSpecialChars = function() {
 		const not_supporting = ['p', 'q', 'qn', 'o', 'on', 'w', 'f', 'nd', 'nc', 'ndc']
 		let head = '<thead><tr><th class="table-shaded"></th>'
 		for (const variant in Test.variants) {
 			if (!not_supporting.includes(Test.variants[variant]))	{
-				head += '<th title="' + variant + '" class="table-primary align-middle"><small>' + toUnicodeVariant(Test.variants[variant], variant) + '</small></th>'
+				head += '<th title="' + toUnicodeVariant(variant, variant) + '" class="table-primary align-middle"><small>' + toUnicodeVariant(Test.variants[variant], variant) + '</small></th>'
 			}
 		}
 		head += '</thead>'
@@ -43,7 +50,7 @@ const Playground = (function(toUnicodeVariant) {
 			let row = '<tr>'
 			row += '<td class="table-primary">' + char + '</td>'
 			for (const variant in Test.variants) {
-				if (!not_supporting.includes(Test.variants[variant])) row += '<td title="Small letter ' + char +'">' + toUnicodeVariant(char + char.toUpperCase(), variant) + '</td>'
+				if (!not_supporting.includes(Test.variants[variant])) row += '<td title="Small letter ' + char +'">' + toUnicodeVariant(char, variant) + '</td>'
 			}
 			row += '</tr>'
 			tbody += row
@@ -52,29 +59,74 @@ const Playground = (function(toUnicodeVariant) {
 		special_chars.insertAdjacentHTML('beforeend', tbody)
 	}
 
+/*
+	initSpecialCapitalChars
+*/
+	const initSpecialCapitalChars = function() {
+		const not_supporting = ['p', 'q', 'qn', 'o', 'on', 'w', 'f', 'nd', 'nc', 'ndc']
+		let head = '<thead><tr><th class="table-shaded"></th>'
+		for (const variant in Test.variants) {
+			if (!not_supporting.includes(Test.variants[variant]))	{
+				head += '<th title="' + toUnicodeVariant(variant, variant) + '" class="table-primary align-middle"><small>' + toUnicodeVariant(Test.variants[variant], variant) + '</small></th>'
+			}
+		}
+		head += '</thead>'
+		special_capital_chars.insertAdjacentHTML('beforeend', head)
+		let tbody = '<tbody>'
+		for (const char of Test.special_capital_chars) {		
+			let row = '<tr>'
+			row += '<td class="table-primary">' + char + '</td>'
+			for (const variant in Test.variants) {
+				if (!not_supporting.includes(Test.variants[variant])) row += '<td title="Small letter ' + char +'">' + toUnicodeVariant(char.toUpperCase(), variant) + '</td>'
+			}
+			row += '</tr>'
+			tbody += row
+		}
+		tbody += '</tbody>'
+		special_capital_chars.insertAdjacentHTML('beforeend', tbody)
+	}
+
+/*
+	initCombinings
+*/
 	const initCombinings = function() {
+		const most_supportive = Object.keys(Test.variants).filter(function(v) {
+			if (!['squared', 'squared negative', 'circled', 'circled negative', 'fullwidth', 'flags', 
+						'parenthesis', 'roman', 'numbers dot', 'numbers comma', 'numbers double circled'].includes(v)) return v
+		})
 		let head = '<thead><tr>'
 		head += '<th>Combining</th>'
 		head += '<th>Short</th>'
-		head += '<th>Sample (italic variant)</th>'
-		head += '</thead>'
+		for (const variant of most_supportive) {
+			head += '<th title="' + toUnicodeVariant(variant, variant) +'" class="text-center">' + toUnicodeVariant(Test.variants[variant], variant) + '</th>'
+		}
+		head += '</tr></thead>'
 		combinings.insertAdjacentHTML('beforeend', head)
 		let rows = ''
 		for (const diacritic in Test.combinings) {
-			let test 
-			if (diacritic.indexOf('encl') === 0) {
-				test = toUnicodeVariant('abc', 'italic', `${diacritic}, space-en`) 
-			} else if (diacritic.indexOf('halo') === 0) {
-				test = toUnicodeVariant('abc', 'sans', `${diacritic}, space-en`) 
-			} else {
-				test = toUnicodeVariant('abcdef', 'italic', diacritic)
+			const diacritics = [diacritic]
+			if (diacritic.indexOf('enclose') === 0) diacritics.push('space-en')
+			if (diacritic.indexOf('halo') === 0) diacritics.push('space-figure')
+			rows += '<tr><td><code class="text-nowrap">' + diacritic + '</code></td><td><code class="text-nowrap">' + Test.combinings[diacritic].short + '</code></td>' 
+			for (const variant of most_supportive) {
+				const test_support = toUnicodeVariant('abc', variant, diacritics)
+				let sample = 'abc'
+				if (true) {
+					rows += '<td title="' + diacritic + ', ' + variant + '" class="text-center text-nowrap">' + test_support + '</td>'
+				} else {
+					rows += '<td title="' + test_support + '" class="table-shaded text-center text-nowrap">' + test_support.slice(0,4) + '&hellip;' + '</td>'
+				}
 			}
-			rows += '<tr><td><code>' + diacritic + '</td><td><code>' + Test.combinings[diacritic].short + '</code></code></td><td>' + test + '</td></tr>'
+
+			rows += '</tr>'
 		}
 		let tbody = '<tbody>' + rows + '</tbody>'
 		combinings.insertAdjacentHTML('beforeend', tbody)
 	}
 
+/*
+	initSpaces
+*/
 	const initSpaces = function() {
 		let head = '<thead><tr><th class="table-shaded"></th>';
 		for (const diacritic in Test.spaces) {
@@ -84,20 +136,22 @@ const Playground = (function(toUnicodeVariant) {
 		spaces.insertAdjacentHTML('beforeend', head)
 		let rows = []
 		for (const variant in Test.variants) {
-			let caption = toUnicodeVariant(Test.variants[variant], variant)
+			let caption = Test.variants[variant]
+			let title = toUnicodeVariant(variant, variant)
 			if (variant === 'squared negative') caption += '<sup>1</sup>'
-			rows[variant] = '<tr><td class="table-primary">' + caption + '</td>'
+			rows[variant] = '<tr><td class="table-primary" title="' + title +'"><small>' + caption + '</small></td>'
 			for (const diacritic in Test.spaces) {
+				let td_start = '<td title="' + toUnicodeVariant(variant, variant) + ' ' + diacritic +'">'
 				if (variant === 'flags') {
-					rows[variant] += '<td>' + toUnicodeVariant('ab', variant, diacritic) + '</td>'
+					rows[variant] += td_start + toUnicodeVariant('ab', variant, diacritic) + '</td>'
 				} else if (variant === 'squared negative') {
-					rows[variant] += '<td>' + toUnicodeVariant('qn', variant, diacritic) + '</td>'
+					rows[variant] += td_start + toUnicodeVariant('qn', variant, diacritic) + '</td>'
 				} else if (variant.indexOf('numbers') === 0) {
-					rows[variant] += '<td>' + toUnicodeVariant('42', variant, diacritic) + '</td>'
+					rows[variant] += td_start + toUnicodeVariant('42', variant, diacritic) + '</td>'
 				} else if (variant === 'roman') {
-					rows[variant] += '<td>' + toUnicodeVariant(42, variant, diacritic) + '</td>'
+					rows[variant] += td_start + toUnicodeVariant(42, variant, diacritic) + '</td>'
 				} else {				
-					rows[variant] += '<td>' + toUnicodeVariant('ab', variant, diacritic) + '</td>'
+					rows[variant] += td_start + toUnicodeVariant('ab', variant, diacritic) + '</td>'
 				}
 			}
 		}

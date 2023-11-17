@@ -77,7 +77,8 @@ const Test = { // eslint-disable-line no-unused-vars
 		'space-em': 'space-em',
 		'space-ogham': 'space-ogham'
 	},
-	"special_chars": "äâáåăǟãāȧȃḅčćċçḉĉèéēĕëěęȇȅêğǧģġḥĩîíìḱḳņńõöōôóòŕşșṩšśüùúûŭȕȗůūẁẃøæ"
+	"special_chars": "äâáåăǟãāȧȃḅčćċçḉĉèéēĕëěęȇȅêğǧģġḥĩîíìḱḳņńõöōôóòŕşșṩšśüùúûŭȕȗůūẁẃø",
+	"special_capital_chars": "ḉçęḥḳņṩşø"
 };
 
 
