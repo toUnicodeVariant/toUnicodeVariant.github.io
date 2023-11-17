@@ -6,11 +6,11 @@
 
 const Playground = (function(toUnicodeVariant) {
 	//const qsel = (sel) => { return document.querySelector(sel) }	// eslint-disable-line no-unused-vars
-	//const qall = (sel) => { return document.querySelectorAll(sel) }	// eslint-disable-line no-unused-vars
+	const qall = (sel) => { return document.querySelectorAll(sel) }	// eslint-disable-line no-unused-vars
 	const gebi = (id) => { return document.getElementById(id) }	// eslint-disable-line no-unused-vars
 
 	const playground_variants = gebi('playground-variants')
-	const playground_diacritics = gebi('playground-diacritics')
+	const playground_combinings = gebi('playground-combinings')
 	const playground_spaces = gebi('playground-spaces')
 	const input = gebi('playground-input')
 	const output = gebi('playground-output')
@@ -30,6 +30,20 @@ const Playground = (function(toUnicodeVariant) {
 		if (playground_variants) {
 			initPlaygroundVariants()
 			initPlaygroundCombinings()
+			initInput()
+		}
+	}
+
+	const storage = function(a) {
+		const name = (s) => 'toUnicodeVariant__' + s
+		if (typeof a === 'string') {
+			return localStorage.getItem(name(a))
+		}
+		if (typeof a === 'object') {
+			const key = Object.keys(a)[0]
+			if (!a[key]) return localStorage.removeItem(name(key)) 
+			const val = typeof a[key] === 'string' ? a[key] : JSON.stringify(a[key])
+			return localStorage.setItem(name(key), val)
 		}
 	}
 
@@ -139,37 +153,6 @@ const Playground = (function(toUnicodeVariant) {
 
 		populate(combinings, most_supportive)
 		populate(combinings_less_supportive, less_supportive)
-
-/*
-		let head = '<thead><tr>'
-		head += '<th>Combining</th>'
-		head += '<th>Short</th>'
-		for (const variant of most_supportive) {
-			head += '<th title="' + toUnicodeVariant(variant, variant) +'" class="text-center">' + toUnicodeVariant(Test.variants[variant], variant) + '</th>'
-		}
-		head += '</tr></thead>'
-		combinings.insertAdjacentHTML('beforeend', head)
-		let rows = ''
-		for (const diacritic in Test.combinings) {
-			const diacritics = [diacritic]
-			if (diacritic.indexOf('enclose') === 0) diacritics.push('space-en')
-			if (diacritic.indexOf('halo') === 0) diacritics.push('space-figure')
-			rows += '<tr><td><code class="text-nowrap">' + diacritic + '</code></td><td><code class="text-nowrap">' + Test.combinings[diacritic].short + '</code></td>' 
-			for (const variant of most_supportive) {
-				const test_support = toUnicodeVariant('abc', variant, diacritics)
-				let sample = 'abc'
-				if (true) {
-					rows += '<td title="' + diacritic + ', ' + variant + '" class="text-center text-nowrap">' + test_support + '</td>'
-				} else {
-					rows += '<td title="' + test_support + '" class="table-shaded text-center text-nowrap">' + test_support.slice(0,4) + '&hellip;' + '</td>'
-				}
-			}
-			rows += '</tr>'
-		}
-		let tbody = '<tbody>' + rows + '</tbody>'
-		combinings.insertAdjacentHTML('beforeend', tbody)
-*/
-
 	}
 
 /*
@@ -216,11 +199,20 @@ const Playground = (function(toUnicodeVariant) {
 */
 	const playgroundConvert = function() {
 		const variant = playground_variants.querySelector('[name="playground-variant"]:checked').getAttribute('data-variant')
+
+		const combinings = []
+		qall('[name="playground-combining-diacritic"]:checked').forEach(function(check) {
+			combinings.push(check.getAttribute('data-diacritic'))
+		})
+		if (combinings.length) storage({ 'current-combinings': combinings.join(',') })
+
 		const value = (function(value) {
 			if (['r'].includes(variant)) return parseInt(value)
 			return value			
 		})(input.value)  
-		output.value = toUnicodeVariant(value, variant)
+
+		output.value = toUnicodeVariant(value, variant, combinings)
+		input.focus()
 	}
 
 /*
@@ -248,13 +240,50 @@ const Playground = (function(toUnicodeVariant) {
 		form += '</div>'
 		form += '</div>'
 		playground_variants.innerHTML = form
+
+		const current_variant = storage('current-variant') || 'italic'
 		playground_variants.querySelectorAll('[name="playground-variant"]').forEach(function(radio) {
-			radio.onclick = playgroundConvert
+			if (current_variant === radio.getAttribute('data-variant')) radio.checked = true
+			radio.onclick = function() {
+				storage({ 'current-variant': this.getAttribute('data-variant') })
+				playgroundConvert()
+			}
 		})
 	}
 
-	const initPlaygroundCombinings = function() {
+/*
+	initInput
+*/
+	const initInput = function() {
+		input.value = storage('current-input') || 'unicode'
+		input.focus()
+		input.oninput = function() {
+			playgroundConvert()
+			storage({ 'current-input': input.value })
+		}
+	}
 
+	const initPlaygroundCombinings = function() {
+		let current_combinings = storage('current-combinings') || ''
+		current_combinings = current_combinings.split(',')
+
+		console.log(current_combinings)
+		let form = '<div class="container">'
+		form += '<div class="row">'
+		for (const diacritic in Test.combinings) {
+			const checked = current_combinings.includes(diacritic) ? 'checked' : ''
+			form += '<div class="col-md-2 col-sm-6 col-xs-6">'
+			form += `<div class="form-check">
+			  <input class="form-check-input" type="checkbox" name="playground-combining-diacritic" data-diacritic="${diacritic}" id="diacritic-${Test.combinings[diacritic].short}" ${checked}>
+			  <label class="form-check-label text-nowrap" for="diacritic-${Test.combinings[diacritic].short}" title="Enable the combining ${diacritic}">
+					${diacritic}
+			  </label>
+			</div>`
+			form += '</div>'
+		}
+		form += '</div>'
+		form += '</div>'
+		playground_combinings.insertAdjacentHTML('beforeend', form)
 	}
 
 	return {
