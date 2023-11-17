@@ -55,13 +55,18 @@
 		<div class="col-lg-12 mt-sm-4 px-0" id="playground-combinings"></div>
 
 		<div class="row">
-			<div class="xinput-group col-md-6">
+			<div class="col-md-5">
 				<label for="input" class="form-label"><small>Input</small></label>
-				<textarea class="form-control" id="playground-input" rows="3" spellcheck="false">unicode</textarea>
+				<textarea class="form-control h-100" id="playground-input" rows="3" spellcheck="false">unicode</textarea>
 			</div>
-			<div class="xinput-group col-md-6">
+			<div class="col-md-7">
+				<div class="float-end">
+					<button class="btn btn-xs btn-outline-secondary" id="btn-larger-font" title="Increase font-size">＋</button>
+					<small id="current-font-size" class="text-muted" data-value="4">4&times;</small>
+					<button class="btn btn-xs btn-outline-secondary" id="btn-smaller-font" title="Decrease font-size">－</button>
+				</div>
 				<label for="output" class="form-label"><small>Output</small></label>
-				<textarea class="form-control" id="playground-output" rows="3" spellcheck="false"></textarea>
+				<div class="form-control h-100 fs-4" id="playground-output" rows="3" contenteditable="true" spellcheck="false"></div>
 			</div>
 		</div>
 	</div>

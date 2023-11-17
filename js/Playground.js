@@ -30,6 +30,7 @@ const Playground = (function(toUnicodeVariant) {
 		if (playground_variants) {
 			initPlaygroundVariants()
 			initPlaygroundCombinings()
+			initPlaygroundFontSize()
 			initInput()
 		}
 	}
@@ -211,7 +212,7 @@ const Playground = (function(toUnicodeVariant) {
 			return value			
 		})(input.value)  
 
-		output.value = toUnicodeVariant(value, variant, combinings)
+		output.innerText = toUnicodeVariant(value, variant, combinings)
 		input.focus()
 	}
 
@@ -241,7 +242,7 @@ const Playground = (function(toUnicodeVariant) {
 		form += '</div>'
 		playground_variants.innerHTML = form
 
-		const current_variant = storage('current-variant') || 'italic'
+		const current_variant = storage('current-variant') || 'i'
 		playground_variants.querySelectorAll('[name="playground-variant"]').forEach(function(radio) {
 			if (current_variant === radio.getAttribute('data-variant')) radio.checked = true
 			radio.onclick = function() {
@@ -263,6 +264,9 @@ const Playground = (function(toUnicodeVariant) {
 		}
 	}
 
+/*
+	initPlaygroundCombinings
+*/
 	const initPlaygroundCombinings = function() {
 		let current_combinings = storage('current-combinings') || ''
 		current_combinings = current_combinings.split(',')
@@ -284,7 +288,44 @@ const Playground = (function(toUnicodeVariant) {
 		form += '</div>'
 		form += '</div>'
 		playground_combinings.insertAdjacentHTML('beforeend', form)
+
+		qall('[name="playground-combining-diacritic"]').forEach(function(check) {
+			if (current_combinings.includes(check.getAttribute('data-diacritic'))) check.checked = true
+			check.onclick = playgroundConvert
+		})
+	
 	}
+
+/* 
+	initPlaygroundFontSize
+*/
+	const initPlaygroundFontSize = function() {
+		let current_font_size = storage('current-font-size') || 4
+		const font_size = gebi('current-font-size')
+
+		const updateFontSize = function() {
+			font_size.setAttribute('data-value', current_font_size)
+			font_size.innerHTML = '&times;' + Math.abs(current_font_size - 7)
+			output.classList.remove('fs-1', 'fs-2', 'fs-3', 'fs-4', 'fs-5', 'fs-6')
+			output.classList.add('fs-' + current_font_size)
+		}
+
+		gebi('btn-larger-font').onclick = function() {
+			current_font_size = current_font_size - 1
+			if (current_font_size === 1) this.setAttribute('disabled', 'disabled')
+			gebi('btn-smaller-font').removeAttribute('disabled')
+			updateFontSize()
+		}
+
+		gebi('btn-smaller-font').onclick = function() {
+			current_font_size = current_font_size + 1
+			if (current_font_size === 6) this.setAttribute('disabled', 'disabled')
+			gebi('btn-larger-font').removeAttribute('disabled')
+			updateFontSize()
+		}
+
+	}
+
 
 	return {
 		init

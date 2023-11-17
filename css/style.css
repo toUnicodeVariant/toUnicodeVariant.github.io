@@ -1,15 +1,9 @@
-/*
-@font-face {
-	font-family: DoulosSIL;
-	src: url('../DoulosSIL/web/DoulosSIL-Regular.woff2') format('woff2'),
-	url('../DoulosSIL/web/DoulosSIL-Regular.woff2') format('woff');
-}
 
-body {
-	font-family: DoulosSIL
+.btn-xs {
+	--bs-btn-padding-y: .25rem;
+	--bs-btn-padding-x: .4rem;
+	--bs-btn-font-size: .65rem;
 }
-*/
-
 
 table td,
 table th {
