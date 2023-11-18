@@ -20,4 +20,27 @@ label {
 	cursor: pointer;
 }
 
+#toggle-combinings.collapsed:before {
+	content: '↧';
+	color: #000;
+	font-weight: bold;
+	font-size: .8rem;
+}
+#toggle-combinings:not(.collapsed):before {
+	content: '↥';
+	color: #000;
+	font-weight: bold;
+	font-size: .8rem;
+}
+
+h1.toUnicodeVariant {
+}
+h1.toUnicodeVariant:before {
+	font-size: small;
+	color: #6c757d;
+	display: block;
+	position: relative;
+	top: .1rem;
+	content: 'toUnicodeVariant'
+}
 

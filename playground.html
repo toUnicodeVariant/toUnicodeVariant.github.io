@@ -52,11 +52,22 @@
 			Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
 		</p>
 		<div class="col-lg-12 mt-sm-4 px-0" id="playground-variants"></div>
-		<div class="col-lg-12 mt-sm-4 px-0" id="playground-combinings"></div>
+
+		<a class="btn btn-light btn-xs" id="toggle-combinings" data-bs-toggle="collapse" href="#playground-combinings" role="button" aria-expanded="false" aria-controls="playground-combinings">
+			Combinings
+	  </a>
+		<div class="col-lg-12 mt-sm-4 px-0 collapse" id="playground-combinings"></div>
+
+		<a class="btn btn-light btn-xs" id="toggle-spacing" data-bs-toggle="collapse" href="#playground-spacing" role="button" aria-expanded="false" aria-controls="playground-spacing">
+			Spacing
+	  </a>
+		<div class="col-lg-12 mt-sm-4 px-0 collapse" id="playground-spacing"></div>
+
+		<hr>
 
 		<div class="row">
 			<div class="col-md-5">
-				<label for="input" class="form-label"><small>Input</small></label>
+				<label for="input" class="form-label"><small><!-- Input --></small></label>
 				<textarea class="form-control h-100" id="playground-input" rows="3" spellcheck="false">unicode</textarea>
 			</div>
 			<div class="col-md-7">
@@ -65,10 +76,18 @@
 					<small id="current-font-size" class="text-muted" data-value="4">4&times;</small>
 					<button class="btn btn-xs btn-outline-secondary" id="btn-smaller-font" title="Decrease font-size">－</button>
 				</div>
-				<label for="output" class="form-label"><small>Output</small></label>
+				<label for="output" class="form-label"><small><!-- Output --></small></label>
 				<div class="form-control h-100 fs-4" id="playground-output" rows="3" contenteditable="true" spellcheck="false"></div>
 			</div>
 		</div>
+
+		<hr>
+		<div class="container">'
+			<div class="row">'
+				<div class="Xcol-md-12 Xw-100 XXd-flex flex-column XXalign-items-start" id="conversion-log"></div>
+			</div>
+		</div>
+
 	</div>
 
 	<footer class="footer mt-auto py-3 bg-light border-top">
@@ -87,6 +106,7 @@
 <script src="fallback/bootstrap.bundle.min.js"></script>
 <script src="js/toUnicodeVariant.js"></script>
 <script src="js/Test.js"></script>
+<script src="js/base.js"></script>
 <script src="js/Playground.js"></script>
 
 </body>
