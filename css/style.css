@@ -20,6 +20,20 @@ label {
 	cursor: pointer;
 }
 
+.btn-toggle.collapsed:before {
+	content: '▲';
+	color: #000;
+	font-weight: bold;
+	font-size: .8rem;
+}
+.btn-toggle:not(.collapsed):before {
+	content: '▼';
+	color: #000;
+	font-weight: bold;
+	font-size: .8rem;
+}
+
+/*
 #toggle-combinings.collapsed:before {
 	content: '↧';
 	color: #000;
@@ -32,6 +46,7 @@ label {
 	font-weight: bold;
 	font-size: .8rem;
 }
+*/
 
 h1.toUnicodeVariant {
 }

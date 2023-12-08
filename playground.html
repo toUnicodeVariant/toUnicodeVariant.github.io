@@ -33,7 +33,7 @@
 						<a class="nav-link" aria-current="Combinings" href="combinings.html">Combinings</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" aria-current="Spaces" href="spaces.html">Spaces</a>
+						<a class="nav-link" aria-current="Spacing" href="spacing.html">Spacing</a>
 					</li>
 					<li class="nav-item mx-4">
 						<a class="navbar-brand" href="https://github.com/davidkonrad/toUnicodeVariant">
@@ -45,20 +45,20 @@
 		</div>
 	</nav>
 
-	<div class="container my-5">
-		<h1 class="display-5">Playground</h1>
+	<div class="container my-4">
+		<h1 class="toUnicodeVariant">Playground</h1>
 		<p>
 			Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
 			Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
 		</p>
 		<div class="col-lg-12 mt-sm-4 px-0" id="playground-variants"></div>
 
-		<a class="btn btn-light btn-xs" id="toggle-combinings" data-bs-toggle="collapse" href="#playground-combinings" role="button" aria-expanded="false" aria-controls="playground-combinings">
+		<a class="btn btn-light btn-xs btn-toggle" id="toggle-combinings" data-bs-toggle="collapse" href="#playground-combinings" role="button" aria-expanded="false" aria-controls="playground-combinings">
 			Combinings
 	  </a>
 		<div class="col-lg-12 mt-sm-4 px-0 collapse" id="playground-combinings"></div>
 
-		<a class="btn btn-light btn-xs" id="toggle-spacing" data-bs-toggle="collapse" href="#playground-spacing" role="button" aria-expanded="false" aria-controls="playground-spacing">
+		<a class="btn btn-light btn-xs btn-toggle" id="toggle-spacing" data-bs-toggle="collapse" href="#playground-spacing" role="button" aria-expanded="false" aria-controls="playground-spacing">
 			Spacing
 	  </a>
 		<div class="col-lg-12 mt-sm-4 px-0 collapse" id="playground-spacing"></div>
@@ -68,7 +68,9 @@
 		<div class="row">
 			<div class="col-md-5">
 				<label for="input" class="form-label"><small><!-- Input --></small></label>
-				<textarea class="form-control h-100" id="playground-input" rows="3" spellcheck="false">unicode</textarea>
+				<textarea class="form-control h-100" id="playground-input" rows="3" spellcheck="false">
+					The quick brown fox jumps over the lazy dog
+				</textarea>
 			</div>
 			<div class="col-md-7">
 				<div class="float-end">

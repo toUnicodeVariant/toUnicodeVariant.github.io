@@ -66,7 +66,7 @@ const Test = { // eslint-disable-line no-unused-vars
 		'v-above': { 'short': 'v-a' },
 		'x-above': { 'short': 'x-a' }
 	},
-	"spaces" : {
+	"spacing" : {
 		'space-zero': 'space-zero',
 		'space-hair': 'space-hair',
 		'space-thin': 'space-thin',

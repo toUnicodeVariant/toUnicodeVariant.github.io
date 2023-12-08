@@ -18,6 +18,7 @@ const Playground = (function(toUnicodeVariant, Base) {
 		if (playground_variants) {
 			initPlaygroundVariants()
 			initPlaygroundCombinings()
+			initPlaygroundSpacing()
 			initPlaygroundFontSize()
 			initInput()
 		}
@@ -31,6 +32,9 @@ const Playground = (function(toUnicodeVariant, Base) {
 
 		const combinings = []
 		qall('[name="playground-combining-diacritic"]:checked').forEach(function(check) {
+			combinings.push(check.getAttribute('data-diacritic'))
+		})
+		qall('[name="playground-spacing-diacritic"]:checked').forEach(function(check) {
 			combinings.push(check.getAttribute('data-diacritic'))
 		})
 		if (combinings.length) Base.storage({ 'current-combinings': combinings.join(',') })
@@ -102,7 +106,7 @@ const Playground = (function(toUnicodeVariant, Base) {
 	initInput
 */
 	const initInput = function() {
-		input.value = Base.storage('current-input') || 'unicode'
+		input.value = Base.storage('current-input') || 'The quick brown fox jumps over the lazy dog'
 		input.focus()
 		input.oninput = function() {
 			playgroundConvert()
@@ -156,6 +160,47 @@ const Playground = (function(toUnicodeVariant, Base) {
 			check.onclick = playgroundConvert
 		})
 	
+	}
+
+/*
+	initPlaygroundSpacing
+*/
+	const initPlaygroundSpacing = function() {
+		const playground_spacing = gebi('playground-spacing')
+		playground_spacing.addEventListener('shown.bs.collapse', function() {
+			gebi('toggle-spacing').setAttribute('aria-expanded', 'false')
+			Base.storage({ 'playground-spacing-collapsed': 'no' })
+		})
+		playground_spacing.addEventListener('hidden.bs.collapse', function() {
+			gebi('toggle-spacingcombinings').setAttribute('aria-expanded', 'true')
+			Base.storage({ 'playground-spacing-collapsed': 'yes' })
+		})
+
+		let current_spacing = Base.storage('current-spacing') || ''
+		current_spacing = current_spacing.split(',')
+
+		let form = '<div class="container">'
+		form += '<div class="row">'
+		for (const diacritic in Test.spacing) {
+			const checked = current_spacing.includes(diacritic) ? 'checked' : ''
+			form += '<div class="col-md-2 col-sm-6 col-xs-6">'
+			form += `<div class="form-check">
+			  <input class="form-check-input" type="checkbox" name="playground-spacing-diacritic" data-diacritic="${diacritic}" id="diacritic-${diacritic}" ${checked}>
+			  <label class="form-check-label text-nowrap" for="diacritic-${diacritic}" title="Enable the spacing ${diacritic}">
+					${diacritic}
+			  </label>
+			</div>`
+			form += '</div>'
+		}
+		form += '</div>'
+		form += '</div>'
+		playground_spacing.insertAdjacentHTML('beforeend', form)
+
+		qall('[name="playground-spacing-diacritic"]').forEach(function(check) {
+			if (current_spacing.includes(check.getAttribute('data-diacritic'))) check.checked = true
+			check.onclick = playgroundConvert
+		})
+
 	}
 
 /* 
