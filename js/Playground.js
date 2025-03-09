@@ -1,5 +1,5 @@
 /*
-	(c) David Konrad, 2023- present
+	(c) David Konrad, 2025- present
 */
 
 "use strict";
@@ -69,6 +69,7 @@ const Playground = (function(toUnicodeVariant, Base) {
 /*
 	initPlaygroundVariants
 */
+/*
 	const initPlaygroundVariants = function() {
 		const variantName = function(variant) {
 			if (variant === 'circled negative') return 'negative'
@@ -101,6 +102,41 @@ const Playground = (function(toUnicodeVariant, Base) {
 			}
 		})
 	}
+*/
+	const initPlaygroundVariants = function() {
+		const variantName = function(variant) {
+			if (variant === 'circled negative') return 'negative'
+			if (variant === 'squared negative') return 'negative'
+			if (variant === 'flags') return 'f l a g s'
+			return variant
+		}
+		let form = '<div class="container">'
+		form += '<div class="variants">'
+		for (const variant in Test.variants) {
+			//form += '<div class="col-md-2 col-sm-6 col-xs-6">'
+			form += '<div class="variant">'
+			form += `<div class="form-check">
+			  <input class="form-check-input" type="radio" name="playground-variant" data-variant="${Test.variants[variant]}" id="variant-${Test.variants[variant]}">
+			  <label class="form-check-label" for="variant-${Test.variants[variant]}" title="${variant}">
+					${toUnicodeVariant(variantName(variant), variant)}
+			  </label>
+			</div>`
+			form += '</div>'
+		}
+		form += '</div>'
+		form += '</div>'
+		playground_variants.innerHTML = form
+
+		const current_variant = Base.storage('current-variant') || 'i'
+		playground_variants.querySelectorAll('[name="playground-variant"]').forEach(function(radio) {
+			if (current_variant === radio.getAttribute('data-variant')) radio.checked = true
+			radio.onclick = function() {
+				Base.storage({ 'current-variant': this.getAttribute('data-variant') })
+				playgroundConvert()
+			}
+		})
+	}
+
 
 /*
 	initInput
