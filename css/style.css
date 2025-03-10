@@ -1,9 +1,19 @@
+:root {
+	--bs-code-color: navy;
+}
 
 .btn-xs {
 	--bs-btn-padding-y: .25rem;
 	--bs-btn-padding-x: .4rem;
 	--bs-btn-font-size: .65rem;
 }
+
+img.icon-small {
+	height: 16px;
+} 
+img.icon-medium {
+	height: 32px;
+} 
 
 table td,
 table th {
@@ -20,39 +30,8 @@ label {
 	cursor: pointer;
 }
 
-.btn-toggle.collapsed:before {
-	content: '▲';
-	color: #000;
-	font-weight: bold;
-	font-size: .8rem;
-}
-.btn-toggle:not(.collapsed):before {
-	content: '▼';
-	color: #000;
-	font-weight: bold;
-	font-size: .8rem;
-}
-
-/*
-#toggle-combinings.collapsed:before {
-	content: '↧';
-	color: #000;
-	font-weight: bold;
-	font-size: .8rem;
-}
-#toggle-combinings:not(.collapsed):before {
-	content: '↥';
-	color: #000;
-	font-weight: bold;
-	font-size: .8rem;
-}
-*/
-
-h1.toUnicodeVariant {
-}
 h1.toUnicodeVariant:before {
 	font-size: small;
-	XXXcolor: #6c757d;
 	color: #666;
 	display: block;
 	position: relative;

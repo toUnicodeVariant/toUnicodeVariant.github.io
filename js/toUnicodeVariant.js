@@ -6,11 +6,16 @@
  *
  * For more inspiration see http://unicode.org/charts/ 
  *
+ * Contributors 
+ *
+ * @anhdung98 https://github.com/anhdung98
+ * @degola https://github.com/degola
+ *
  */
 
 function toUnicodeVariant(str, variant, combinings) {
 
-	const string = String.fromCodePoint;
+	const string = String.fromCodePoint
 
 	const offsets = {
 		m: [0x1d670, 0x1d7f6],
@@ -118,7 +123,7 @@ function toUnicodeVariant(str, variant, combinings) {
 			'=': 0xFF1D, '>': 0xFF1E, '?': 0xFF1F, '@': 0xFF20, '\\': 0xFF3C, '[': 0xFF3B,
 			']': 0xFF3D, '^': 0xFF3E, '_': 0xFF3F,'`': 0xFF40, '{': 0xFF5B, '|': 0xFF5C,
 			'}': 0xFF5D, '~': 0xFF5E, '⦅': 0xFF5F, '⦆': 0xFF60, '￠': 0xFFE0, '￡': 0xFFE1,
-			'¦': 0xFFE4, '￥': 0xFFE5, '': 0xFFE6, 'ｰ': 0xFF70, '｡': 0xFF70, '､': 0xFF64, 
+			'¦': 0xFFE4, '￥': 0xFFE5, '￦': 0xFFE6, 'ｰ': 0xFF70, '｡': 0xFF70, 	'､': 0xFF64, 
 			'･': 0xFF65, '￣': 0xFFE3, '¬': 0xFFE2
 		},
 		f: {},
@@ -212,6 +217,8 @@ function toUnicodeVariant(str, variant, combinings) {
 		'ogonek': { 'code': 0x0328 },
 		'solidus': { 'code': 0x0338 },
 		'solidussm': { 'code': 0x0337 },
+		'hookabove': { 'code': 0x0309 },
+    'horn': { 'code': 0x031B },
 		//spacing combinings
 		'space-zero': { 'code': 0xFEFF },
 		'space-hair': { 'code': 0x200A },
@@ -222,10 +229,8 @@ function toUnicodeVariant(str, variant, combinings) {
 		'space-cjk': { 'code': 0x3000 },
 		'space-em': { 'code': 0x2001 },
 		'space-ogham': { 'code': 0x1680 },
-		//joiners
-		'gjoiner': { 'code': 0x034F },
-		'wjoiner': { 'code': 0x2060 },
-		'nonejoiner': { 'code': 0x200C },
+		//combining grapheme joiner
+		'CGJ': { 'code': 0x034F }
 	}
 
 	const special_chars = {
@@ -303,30 +308,69 @@ function toUnicodeVariant(str, variant, combinings) {
 		//'q̄': { 'char': 'q', 'combine': string(diacritics.macron.code) },
 		//'r̃': { 'char': 'r', 'combine': string(diacritics.tilde.code) },
 		//'s̈': { 'char': 's', 'combine': string(diacritics.diaeresis.code) },
+		'đ': { 'char': 'd', 'combine': string(diacritics.macron.code) },
+    'à': { 'char': 'a', 'combine': string(diacritics.grave.code) },
+    'ả': { 'char': 'a', 'combine': string(diacritics.hookabove.code) },
+    'ạ': { 'char': 'a', 'combine': string(diacritics.dotbelow.code) },
+    'ẻ': { 'char': 'e', 'combine': string(diacritics.hookabove.code) },
+    'ẽ': { 'char': 'e', 'combine': string(diacritics.tilde.code) },
+    'ẹ': { 'char': 'e', 'combine': string(diacritics.dotbelow.code) },
+    'ỉ': { 'char': 'i', 'combine': string(diacritics.hookabove.code) },
+    'ị': { 'char': 'i', 'combine': string(diacritics.dotbelow.code) },
+    'ỏ': { 'char': 'o', 'combine': string(diacritics.hookabove.code) },
+    'ọ': { 'char': 'o', 'combine': string(diacritics.dotbelow.code) },
+    'ủ': { 'char': 'u', 'combine': string(diacritics.hookabove.code) },
+    'ũ': { 'char': 'u', 'combine': string(diacritics.tilde.code) },
+    'ụ': { 'char': 'u', 'combine': string(diacritics.dotbelow.code) },
+    'ý': { 'char': 'y', 'combine': string(diacritics.acute.code) },
+    'ỳ': { 'char': 'y', 'combine': string(diacritics.grave.code) },
+    'ỷ': { 'char': 'y', 'combine': string(diacritics.hookabove.code) },
+    'ỹ': { 'char': 'y', 'combine': string(diacritics.tilde.code) },
+    'ỵ': { 'char': 'y', 'combine': string(diacritics.dotbelow.code) },
+    'ắ': { 'char': 'a', 'combine': string(diacritics.breve.code) + string(diacritics.acute.code) },
+    'ằ': { 'char': 'a', 'combine': string(diacritics.breve.code) + string(diacritics.grave.code) },
+    'ẳ': { 'char': 'a', 'combine': string(diacritics.breve.code) + string(diacritics.hookabove.code) },
+    'ẵ': { 'char': 'a', 'combine': string(diacritics.breve.code) + string(diacritics.tilde.code) },
+    'ặ': { 'char': 'a', 'combine': string(diacritics.breve.code) + string(diacritics.dotbelow.code) },
+    'ấ': { 'char': 'a', 'combine': string(diacritics.circumflex.code) + string(diacritics.acute.code) },
+    'ầ': { 'char': 'a', 'combine': string(diacritics.circumflex.code) + string(diacritics.grave.code) },
+    'ẩ': { 'char': 'a', 'combine': string(diacritics.circumflex.code) + string(diacritics.hookabove.code) },
+    'ẫ': { 'char': 'a', 'combine': string(diacritics.circumflex.code) + string(diacritics.tilde.code) },
+    'ậ': { 'char': 'a', 'combine': string(diacritics.circumflex.code) + string(diacritics.dotbelow.code) },
+    'ế': { 'char': 'e', 'combine': string(diacritics.circumflex.code) + string(diacritics.acute.code) },
+    'ề': { 'char': 'e', 'combine': string(diacritics.circumflex.code) + string(diacritics.grave.code) },
+    'ể': { 'char': 'e', 'combine': string(diacritics.circumflex.code) + string(diacritics.hookabove.code) },
+    'ễ': { 'char': 'e', 'combine': string(diacritics.circumflex.code) + string(diacritics.tilde.code) },
+    'ệ': { 'char': 'e', 'combine': string(diacritics.circumflex.code) + string(diacritics.dotbelow.code) },
+    'ố': { 'char': 'o', 'combine': string(diacritics.circumflex.code) + string(diacritics.acute.code) },
+    'ồ': { 'char': 'o', 'combine': string(diacritics.circumflex.code) + string(diacritics.grave.code) },
+    'ổ': { 'char': 'o', 'combine': string(diacritics.circumflex.code) + string(diacritics.hookabove.code) },
+    'ỗ': { 'char': 'o', 'combine': string(diacritics.circumflex.code) + string(diacritics.tilde.code) },
+    'ộ': { 'char': 'o', 'combine': string(diacritics.circumflex.code) + string(diacritics.dotbelow.code) },
+    'ơ': { 'char': 'o', 'combine': string(diacritics.horn.code) },
+    'ớ': { 'char': 'o', 'combine': string(diacritics.horn.code) + string(diacritics.acute.code) },
+    'ờ': { 'char': 'o', 'combine': string(diacritics.horn.code) + string(diacritics.grave.code) },
+    'ở': { 'char': 'o', 'combine': string(diacritics.horn.code) + string(diacritics.hookabove.code) },
+    'ỡ': { 'char': 'o', 'combine': string(diacritics.horn.code) + string(diacritics.tilde.code) },
+    'ợ': { 'char': 'o', 'combine': string(diacritics.horn.code) + string(diacritics.dotbelow.code) },
+    'ư': { 'char': 'u', 'combine': string(diacritics.horn.code) },
+    'ứ': { 'char': 'u', 'combine': string(diacritics.horn.code) + string(diacritics.acute.code) },
+    'ừ': { 'char': 'u', 'combine': string(diacritics.horn.code) + string(diacritics.grave.code) },
+    'ử': { 'char': 'u', 'combine': string(diacritics.horn.code) + string(diacritics.hookabove.code) },
+    'ữ': { 'char': 'u', 'combine': string(diacritics.horn.code) + string(diacritics.tilde.code) },
+    'ự': { 'char': 'u', 'combine': string(diacritics.horn.code) + string(diacritics.dotbelow.code) },
 	}
+/*
+	//for TEST.special_chars
+	const s = Object.keys(special_chars)
+	s.sort(Intl.Collator().compare)
+	console.log(s.join(''))
+*/
 
-	//reset special chars, capital letters, choose the desired method
+	//reset special chars, capital letters
+	//in the future, some capital speciel chars can be mimicked as well
 	for (const char of Object.keys(special_chars)) {
-		/* 
-			// #1 for all capital letters, simply ignore the small letter diacritic(s)
-			special_chars[char.toUpperCase()] = { 'char': char, 'combine': false }
-		*/
-		/*
-			// #2 for all capital letters, blindly use any of the small letter diacritic(s)
-			special_chars[char.toUpperCase()] = { 'char': special_chars[char].char.toUpperCase(), 'combine': special_chars[char].combine }
-		*/
-
-		// #3 use small letter diacritics on some capital letters
-		if (['ḉ', 'ç', 'ę', 'ḥ', 'ḳ', 'ņ', 'ṩ', 'ş', 'š', 'ø'].includes(char)) {
-			if (char === 'ø') {
-				special_chars['Ø'] = { 'char': 'O', 'combine': string(diacritics.solidus.code) }
-			} else {
-				special_chars[char.toUpperCase()] = { 'char': special_chars[char].char.toUpperCase(), 'combine': special_chars[char].combine }
-			}
-		} else {
-			special_chars[char.toUpperCase()] = { 'char': char, 'combine': false }
-		}
-
+		special_chars[char.toUpperCase()] = { 'char': char, 'combine': false }
 	}
 
 	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
@@ -348,7 +392,7 @@ function toUnicodeVariant(str, variant, combinings) {
 			diacritic = diacritic.trim().toLowerCase()
 			for (const d in diacritics) {
 				if (diacritic === d || diacritic === diacritics[d].short) {
-					result += string(diacritics.nonejoiner.code, diacritics[d].code) 
+					result += string(diacritics[d].code) //+ string(diacritics.CGJ.code) seem not to have any effect
 				}
 			}
 		})

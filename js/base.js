@@ -1,5 +1,5 @@
 /*
-	(c) David Konrad, 2023- present
+	(c) David Konrad, 2025- present
 */
 
 "use strict";
@@ -104,10 +104,10 @@ const Base = (function(toUnicodeVariant) {
 
 		const populate = function(table, variants) {
 			let head = '<thead><tr>'
-			head += '<th>Combining</th>'
-			head += '<th>Short</th>'
+			head += '<th class="table-shaded">Combining</th>'
+			head += '<th class="table-shaded">Short</th>'
 			for (const variant of variants) {
-				head += '<th title="' + toUnicodeVariant(variant, variant) +'" class="text-center">' + toUnicodeVariant(Test.variants[variant], variant) + '</th>'
+				head += '<th title="' + toUnicodeVariant(variant, variant) +'" class="table-primary text-center">' + toUnicodeVariant(Test.variants[variant], variant) + '</th>'
 			}
 			head += '</tr></thead>'
 			table.insertAdjacentHTML('beforeend', head)
@@ -119,7 +119,7 @@ const Base = (function(toUnicodeVariant) {
 				let sup = diacritic.indexOf('enclose') === 0 ? '<sup class="text-muted">1</sup>' : ''
 				if (diacritic.indexOf('halo') === 0) sup = '<sup class="text-muted">2</sup>'
 
-				rows += '<tr><td><code class="text-nowrap">' + diacritic + sup + '</code></td><td><code class="text-nowrap">' + Test.combinings[diacritic].short + '</code></td>' 
+				rows += '<tr><td class="table-warning"><code class="text-nowrap">' + diacritic + sup + '</code></td><td class="table-warning"><code class="text-nowrap">' + Test.combinings[diacritic].short + '</code></td>' 
 				for (const variant of variants) {
 					const sample = ['roman', 'numbers dot', 'numbers comma', 'numbers double circled'].includes(variant) 
 						? variant === 'roman' ? 42 : '42' 

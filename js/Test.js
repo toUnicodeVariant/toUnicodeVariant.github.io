@@ -1,5 +1,5 @@
 /*
-	(c) David Konrad, 2023- present
+	(c) David Konrad, 2025- present
 */
 
 "use strict";
@@ -77,7 +77,7 @@ const Test = { // eslint-disable-line no-unused-vars
 		'space-em': 'space-em',
 		'space-ogham': 'space-ogham'
 	},
-	"special_chars": "äâáåăǟãāȧȃḅčćċçḉĉèéēĕëěęȇȅêğǧģġḥĩîíìḱḳņńõöōôóòŕşșṩšśüùúûŭȕȗůūẁẃø",
+	"special_chars": "áàăắằẵẳâấầẫẩåäǟãȧāảȃạặậḅćĉčċçḉđéèĕêếềễểěëẽęēẻȅȇẹệğǧġģḥíìîĩỉịḱḳńņóòôốồỗổöõøōỏơớờỡởợọộŕśšşṩșúùŭûůüũūủȕȗưứừữửựụẃẁýỳỹỷỵ",
 	"special_capital_chars": "ḉçęḥḳņṩşø"
 };
 

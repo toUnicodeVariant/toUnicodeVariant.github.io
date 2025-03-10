@@ -19,7 +19,6 @@ const Playground = (function(toUnicodeVariant, Base) {
 			initPlaygroundVariants()
 			initPlaygroundCombinings()
 			initPlaygroundSpacing()
-			//initPlaygroundFontSize()
 			initInput()
 		}
 	}
@@ -67,10 +66,6 @@ const Playground = (function(toUnicodeVariant, Base) {
 		gebi('conversion-log').insertAdjacentHTML('beforeend', alert)
 	}
 
-/*
-	initPlaygroundVariants
-*/
-/*
 	const initPlaygroundVariants = function() {
 		const variantName = function(variant) {
 			if (variant === 'circled negative') return 'negative'
@@ -78,43 +73,8 @@ const Playground = (function(toUnicodeVariant, Base) {
 			if (variant === 'flags') return 'f l a g s'
 			return variant
 		}
-		let form = '<div class="container">'
-		form += '<div class="row">'
-		for (const variant in Test.variants) {
-			form += '<div class="col-md-2 col-sm-6 col-xs-6">'
-			form += `<div class="form-check">
-			  <input class="form-check-input" type="radio" name="playground-variant" data-variant="${Test.variants[variant]}" id="variant-${Test.variants[variant]}">
-			  <label class="form-check-label" for="variant-${Test.variants[variant]}" title="Set variant to ${variant}">
-					${toUnicodeVariant(variantName(variant), variant)}
-			  </label>
-			</div>`
-			form += '</div>'
-		}
-		form += '</div>'
-		form += '</div>'
-		playground_variants.innerHTML = form
-
-		const current_variant = Base.storage('current-variant') || 'i'
-		playground_variants.querySelectorAll('[name="playground-variant"]').forEach(function(radio) {
-			if (current_variant === radio.getAttribute('data-variant')) radio.checked = true
-			radio.onclick = function() {
-				Base.storage({ 'current-variant': this.getAttribute('data-variant') })
-				playgroundConvert()
-			}
-		})
-	}
-*/
-	const initPlaygroundVariants = function() {
-		const variantName = function(variant) {
-			if (variant === 'circled negative') return 'negative'
-			if (variant === 'squared negative') return 'negative'
-			if (variant === 'flags') return 'f l a g s'
-			return variant
-		}
-		//let form = '<div class="container">'
 		let form = '<div class="variants">'
 		for (const variant in Test.variants) {
-			//form += '<div class="col-md-2 col-sm-6 col-xs-6">'
 			form += '<div class="variant">'
 			form += `<div class="form-check">
 			  <input class="form-check-input" type="radio" name="playground-variant" data-variant="${Test.variants[variant]}" id="variant-${Test.variants[variant]}">
@@ -125,7 +85,6 @@ const Playground = (function(toUnicodeVariant, Base) {
 			form += '</div>'
 		}
 		form += '</div>'
-		//form += '</div>'
 		playground_variants.innerHTML = form
 
 		const current_variant = Base.storage('current-variant') || 'i'
@@ -156,24 +115,6 @@ const Playground = (function(toUnicodeVariant, Base) {
 */
 	const initPlaygroundCombinings = function() {
 		const playground_combinings = gebi('playground-combinings')
-/*
-		playground_combinings.addEventListener('shown.bs.collapse', function() {
-			gebi('toggle-combinings').setAttribute('aria-expanded', 'false')
-			Base.storage({ 'playground-combinings-collapsed': 'no' })
-		})
-		playground_combinings.addEventListener('hidden.bs.collapse', function() {
-			gebi('toggle-combinings').setAttribute('aria-expanded', 'true')
-			Base.storage({ 'playground-combinings-collapsed': 'yes' })
-		})
-*/
-/*
-		const combinings_collapsed = Base.storage('playground-combinings-collapsed') || 'yes'
-		if (combinings_collapsed === 'yes') {
-			playground_combinings.classList.add('collapse')
-		} else {
-			playground_combinings.classList.remove('collapse')
-		}
-*/
 		let current_combinings = Base.storage('current-combinings') || ''
 		current_combinings = current_combinings.split(',')
 
@@ -190,7 +131,6 @@ const Playground = (function(toUnicodeVariant, Base) {
 			form += '</div>'
 		}
 		form += '</div>'
-		//form += '</div>'
 		playground_combinings.insertAdjacentHTML('beforeend', form)
 
 		qall('[name="playground-combining-diacritic"]').forEach(function(check) {
@@ -205,21 +145,10 @@ const Playground = (function(toUnicodeVariant, Base) {
 */
 	const initPlaygroundSpacing = function() {
 		const playground_spacing = gebi('playground-spacing')
-/*
-		playground_spacing.addEventListener('shown.bs.collapse', function() {
-			gebi('toggle-spacing').setAttribute('aria-expanded', 'false')
-			Base.storage({ 'playground-spacing-collapsed': 'no' })
-		})
-		playground_spacing.addEventListener('hidden.bs.collapse', function() {
-			gebi('toggle-spacingcombinings').setAttribute('aria-expanded', 'true')
-			Base.storage({ 'playground-spacing-collapsed': 'yes' })
-		})
-*/
 		let current_spacing = Base.storage('current-spacing') || ''
 		current_spacing = current_spacing.split(',')
 
 		let form = '<div class="variants">'
-		//form += '<div class="row">'
 		for (const diacritic in Test.spacing) {
 			const checked = current_spacing.includes(diacritic) ? 'checked' : ''
 			form += '<div class="variant">'
@@ -231,7 +160,6 @@ const Playground = (function(toUnicodeVariant, Base) {
 			</div>`
 			form += '</div>'
 		}
-		//form += '</div>'
 		form += '</div>'
 		playground_spacing.insertAdjacentHTML('beforeend', form)
 
@@ -242,38 +170,6 @@ const Playground = (function(toUnicodeVariant, Base) {
 
 	}
 
-/* 
-	initPlaygroundFontSize
-*/
-/*
-	const initPlaygroundFontSize = function() {
-		return
-		let current_font_size = Base.storage('current-font-size') || 4
-		const font_size = gebi('current-font-size')
-
-		const updateFontSize = function() {
-			font_size.setAttribute('data-value', current_font_size)
-			font_size.innerHTML = '&times;' + Math.abs(current_font_size - 7)
-			output.classList.remove('fs-1', 'fs-2', 'fs-3', 'fs-4', 'fs-5', 'fs-6')
-			output.classList.add('fs-' + current_font_size)
-		}
-
-		gebi('btn-larger-font').onclick = function() {
-			current_font_size = current_font_size - 1
-			if (current_font_size === 1) this.setAttribute('disabled', 'disabled')
-			gebi('btn-smaller-font').removeAttribute('disabled')
-			updateFontSize()
-		}
-
-		gebi('btn-smaller-font').onclick = function() {
-			current_font_size = current_font_size + 1
-			if (current_font_size === 6) this.setAttribute('disabled', 'disabled')
-			gebi('btn-larger-font').removeAttribute('disabled')
-			updateFontSize()
-		}
-
-	}
-*/
 	return {
 		init
 	}
