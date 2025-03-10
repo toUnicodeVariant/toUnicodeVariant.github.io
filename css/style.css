@@ -52,7 +52,8 @@ h1.toUnicodeVariant {
 }
 h1.toUnicodeVariant:before {
 	font-size: small;
-	color: #6c757d;
+	XXXcolor: #6c757d;
+	color: #666;
 	display: block;
 	position: relative;
 	top: .1rem;

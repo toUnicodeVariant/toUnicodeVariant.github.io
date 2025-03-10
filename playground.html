@@ -15,14 +15,38 @@
 <link href="css/style.css" rel="stylesheet">
 <meta name="google-site-verification" content="k9h1qyQ2iX96jwm-5Fsp7BWz-TMPbiam8dm87KMvlOE">
 -->
+<!--
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <style>
+.textarea-label {
+	margin-bottom: 0;
+	color: #666;
+	user-select: none;
+}
+img.icon-small {
+	height: 16px;
+} 
+img.icon-medium {
+	height: 32px;
+} 
+details {
+	border: 1px solid #ebebeb;
+	border-radius: 4px;
+	padding: .5rem;
+	margin-bottom: .5rem;
+	background: #fafafa;
+}
+details summary {
+	font-size: small;
+	color: #666;
+	user-select: none;
+}
 .variant {
-	XXbackground-color: dodgerblue;
-	XXcolor: white;
 	padding: .3rem;
-	XXheight: 4rem;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -31,8 +55,8 @@
 	cursor: pointer;
 }
 .variants {
-	max-width: 1200px;
-	margin: 0 auto;
+	max-width: 1300px;
+	margin: 0 .5rem; /*auto;*/
 	display: grid;
 	gap: .1rem .2rem;
 }
@@ -46,10 +70,9 @@
 	.variants { grid-template-columns: repeat(4, 1fr); }
 }
 @media (min-width: 1100px) {
-	.variants { grid-template-columns: masonry; /*repeat(5, 1fr); }*/
+	.variants { grid-template-columns: repeat(5, 1fr); }
 }
 </style>
-
 </head>
 <body class="d-flex flex-column h-100">
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -61,20 +84,20 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<li class="nav-item">
-						<a class="nav-link active" aria-current="Playground" href="playground.html">Playground</a>
+						<a class="nav-link active" href="playground.html">Playground</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" aria-current="Special chars" href="special-chars.html">Special chars</a>
+						<a class="nav-link" href="special-chars.html">Special chars</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" aria-current="Combinings" href="combinings.html">Combinings</a>
+						<a class="nav-link" href="combinings.html">Combinings</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" aria-current="Spacing" href="spacing.html">Spacing</a>
+						<a class="nav-link" href="spacing.html">Spacing</a>
 					</li>
 					<li class="nav-item mx-4">
 						<a class="navbar-brand" href="https://github.com/davidkonrad/toUnicodeVariant">
-							<img height="32px" src ="github/github-mark-white.svg"/>
+							<img src ="github/github-mark-white.svg" class="icon-medium" alt="github">
 						</a>
 					</li>
 				</ul>
@@ -83,64 +106,43 @@
 	</nav>
 
 	<div class="container my-4">
-		<h1 class="toUnicodeVariant">Playground</h1>
+		<h1 class="toUnicodeVariant">Playground	</h1>
 		<p>
 			Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
 			Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
 		</p>
 
-<!--
-		<div class="col-lg-12 mt-sm-4 px-0" id="playground-variants"></div>
--->
-
-		<details open id="playground-variants">
-			<summary>variant</summary>
+		<details open class="details-animated">
+			<summary>Variant</summary>
+			<div id="playground-variants"></div>
 		</details>
 
-<!--
-		<a class="btn btn-light btn-xs btn-toggle" id="toggle-combinings" data-bs-toggle="collapse" href="#playground-combinings" role="button" aria-expanded="false" aria-controls="playground-combinings">
-			Combinings
-	  </a>
-		<div class="col-lg-12 mt-sm-4 px-0 collapse" id="playground-combinings"></div>
--->
-		<details open id="playground-combinings">
-			<summary>combining</summary>
+		<details>
+			<summary>Combining</summary>
+			<div id="playground-combinings"></div>
 		</details>
 
-<!--
-		<a class="btn btn-light btn-xs btn-toggle" id="toggle-spacing" data-bs-toggle="collapse" href="#playground-spacing" role="button" aria-expanded="false" aria-controls="playground-spacing">
-			Spacing
-	  </a>
-		<div class="col-lg-12 mt-sm-4 px-0 collapse" id="playground-spacing"></div>
--->
-		<details open id="playground-spacing">
-			<summary>combining</summary>
+		<details>
+			<summary>Spacing</summary>
+			<div id="playground-spacing"></div>
 		</details>
-
-		<hr>
 
 		<div class="row">
 			<div class="col-md-5">
-				<label for="input" class="form-label"><small><!-- Input --></small></label>
-				<textarea class="form-control h-100" id="playground-input" rows="3" spellcheck="false">
+				<label for="playground-input" class="form-label textarea-label"><small>Input</small></label>
+				<textarea class="form-control" id="playground-input" rows="3" spellcheck="false">
 					The quick brown fox jumps over the lazy dog
 				</textarea>
 			</div>
 			<div class="col-md-7">
-				<div class="float-end">
-					<button class="btn btn-xs btn-outline-secondary" id="btn-larger-font" title="Increase font-size">＋</button>
-					<small id="current-font-size" class="text-muted" data-value="4">4&times;</small>
-					<button class="btn btn-xs btn-outline-secondary" id="btn-smaller-font" title="Decrease font-size">－</button>
-				</div>
-				<label for="output" class="form-label"><small><!-- Output --></small></label>
-				<div class="form-control h-100 fs-4" id="playground-output" rows="3" contenteditable="true" spellcheck="false"></div>
+				<label for="playground-output" class="form-label textarea-label"><small>Output</small></label>
+				<textarea class="form-control" id="playground-output" rows="3" spellcheck="false"></textarea>
 			</div>
 		</div>
 
-		<hr>
-		<div class="container">'
-			<div class="row">'
-				<div class="Xcol-md-12 Xw-100 XXd-flex flex-column XXalign-items-start" id="conversion-log"></div>
+		<div class="container">
+			<div class="row">
+				<div class="flex-column" id="conversion-log"></div>
 			</div>
 		</div>
 
@@ -149,19 +151,16 @@
 	<footer class="footer mt-auto py-3 bg-light border-top">
 		<ul class="nav justify-content-center pb-3 mb-3">
 			<li class="nav-item">
-				<span class="nav-link text-body-secondary">© 2023- David Konrad</span>
+				<span class="nav-link text-body-secondary">© 2025- David Konrad</span>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link text-body-secondary" href="https://github.com/davidkonrad/toUnicodeVariant">
-					<img height="16px" src ="github/github-mark.svg"/>
+					<img src ="github/github-mark.svg" class="icon-small" alt="github">
 				</a>
 			</li>
 		</ul>
 	</footer>
 
-<!--
-<script src="fallback/bootstrap.bundle.min.js"></script>
--->
 <script src="js/toUnicodeVariant.js"></script>
 <script src="js/Test.js"></script>
 <script src="js/base.js"></script>

@@ -19,7 +19,7 @@ const Playground = (function(toUnicodeVariant, Base) {
 			initPlaygroundVariants()
 			initPlaygroundCombinings()
 			initPlaygroundSpacing()
-			initPlaygroundFontSize()
+			//initPlaygroundFontSize()
 			initInput()
 		}
 	}
@@ -54,6 +54,7 @@ const Playground = (function(toUnicodeVariant, Base) {
 	logConversion 
 */
 	const logConversion = function(text, variant, combinings) {
+		return
 		if (!text) return
 		const alert = 
 			`<div class="alert alert-light alert-dismissible fade show" role="alert">
@@ -110,8 +111,8 @@ const Playground = (function(toUnicodeVariant, Base) {
 			if (variant === 'flags') return 'f l a g s'
 			return variant
 		}
-		let form = '<div class="container">'
-		form += '<div class="variants">'
+		//let form = '<div class="container">'
+		let form = '<div class="variants">'
 		for (const variant in Test.variants) {
 			//form += '<div class="col-md-2 col-sm-6 col-xs-6">'
 			form += '<div class="variant">'
@@ -124,7 +125,7 @@ const Playground = (function(toUnicodeVariant, Base) {
 			form += '</div>'
 		}
 		form += '</div>'
-		form += '</div>'
+		//form += '</div>'
 		playground_variants.innerHTML = form
 
 		const current_variant = Base.storage('current-variant') || 'i'
@@ -155,6 +156,7 @@ const Playground = (function(toUnicodeVariant, Base) {
 */
 	const initPlaygroundCombinings = function() {
 		const playground_combinings = gebi('playground-combinings')
+/*
 		playground_combinings.addEventListener('shown.bs.collapse', function() {
 			gebi('toggle-combinings').setAttribute('aria-expanded', 'false')
 			Base.storage({ 'playground-combinings-collapsed': 'no' })
@@ -163,22 +165,22 @@ const Playground = (function(toUnicodeVariant, Base) {
 			gebi('toggle-combinings').setAttribute('aria-expanded', 'true')
 			Base.storage({ 'playground-combinings-collapsed': 'yes' })
 		})
-
+*/
+/*
 		const combinings_collapsed = Base.storage('playground-combinings-collapsed') || 'yes'
 		if (combinings_collapsed === 'yes') {
 			playground_combinings.classList.add('collapse')
 		} else {
 			playground_combinings.classList.remove('collapse')
 		}
-
+*/
 		let current_combinings = Base.storage('current-combinings') || ''
 		current_combinings = current_combinings.split(',')
 
-		let form = '<div class="container">'
-		form += '<div class="row">'
+		let form = '<div class="variants">'
 		for (const diacritic in Test.combinings) {
 			const checked = current_combinings.includes(diacritic) ? 'checked' : ''
-			form += '<div class="col-md-2 col-sm-6 col-xs-6">'
+			form += '<div class="variant">'
 			form += `<div class="form-check">
 			  <input class="form-check-input" type="checkbox" name="playground-combining-diacritic" data-diacritic="${diacritic}" id="diacritic-${Test.combinings[diacritic].short}" ${checked}>
 			  <label class="form-check-label text-nowrap" for="diacritic-${Test.combinings[diacritic].short}" title="Enable the combining ${diacritic}">
@@ -188,7 +190,7 @@ const Playground = (function(toUnicodeVariant, Base) {
 			form += '</div>'
 		}
 		form += '</div>'
-		form += '</div>'
+		//form += '</div>'
 		playground_combinings.insertAdjacentHTML('beforeend', form)
 
 		qall('[name="playground-combining-diacritic"]').forEach(function(check) {
@@ -203,6 +205,7 @@ const Playground = (function(toUnicodeVariant, Base) {
 */
 	const initPlaygroundSpacing = function() {
 		const playground_spacing = gebi('playground-spacing')
+/*
 		playground_spacing.addEventListener('shown.bs.collapse', function() {
 			gebi('toggle-spacing').setAttribute('aria-expanded', 'false')
 			Base.storage({ 'playground-spacing-collapsed': 'no' })
@@ -211,15 +214,15 @@ const Playground = (function(toUnicodeVariant, Base) {
 			gebi('toggle-spacingcombinings').setAttribute('aria-expanded', 'true')
 			Base.storage({ 'playground-spacing-collapsed': 'yes' })
 		})
-
+*/
 		let current_spacing = Base.storage('current-spacing') || ''
 		current_spacing = current_spacing.split(',')
 
-		let form = '<div class="container">'
-		form += '<div class="row">'
+		let form = '<div class="variants">'
+		//form += '<div class="row">'
 		for (const diacritic in Test.spacing) {
 			const checked = current_spacing.includes(diacritic) ? 'checked' : ''
-			form += '<div class="col-md-2 col-sm-6 col-xs-6">'
+			form += '<div class="variant">'
 			form += `<div class="form-check">
 			  <input class="form-check-input" type="checkbox" name="playground-spacing-diacritic" data-diacritic="${diacritic}" id="diacritic-${diacritic}" ${checked}>
 			  <label class="form-check-label text-nowrap" for="diacritic-${diacritic}" title="Enable the spacing ${diacritic}">
@@ -228,7 +231,7 @@ const Playground = (function(toUnicodeVariant, Base) {
 			</div>`
 			form += '</div>'
 		}
-		form += '</div>'
+		//form += '</div>'
 		form += '</div>'
 		playground_spacing.insertAdjacentHTML('beforeend', form)
 
@@ -242,7 +245,9 @@ const Playground = (function(toUnicodeVariant, Base) {
 /* 
 	initPlaygroundFontSize
 */
+/*
 	const initPlaygroundFontSize = function() {
+		return
 		let current_font_size = Base.storage('current-font-size') || 4
 		const font_size = gebi('current-font-size')
 
@@ -268,7 +273,7 @@ const Playground = (function(toUnicodeVariant, Base) {
 		}
 
 	}
-
+*/
 	return {
 		init
 	}
