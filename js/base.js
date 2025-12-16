@@ -52,7 +52,7 @@ const Base = (function(toUnicodeVariant) {
 		let tbody = '<tbody>'
 		for (const char of Test.special_chars) {		
 			let row = '<tr>'
-			row += '<td class="table-primary">' + char + '</td>'
+			row += '<td class="table-warning">' + char + '</td>'
 			for (const variant in Test.variants) {
 				if (!not_supporting.includes(Test.variants[variant])) row += '<td title="Small letter ' + char +'">' + toUnicodeVariant(char, variant) + '</td>'
 			}
@@ -104,8 +104,8 @@ const Base = (function(toUnicodeVariant) {
 
 		const populate = function(table, variants) {
 			let head = '<thead><tr>'
-			head += '<th class="table-shaded">Combining</th>'
-			head += '<th class="table-shaded">Short</th>'
+			head += '<th class="table-shaded fw-normal">combining</th>'
+			head += '<th class="table-shaded fw-normal">short</th>'
 			for (const variant of variants) {
 				head += '<th title="' + toUnicodeVariant(variant, variant) +'" class="table-primary text-center">' + toUnicodeVariant(Test.variants[variant], variant) + '</th>'
 			}
